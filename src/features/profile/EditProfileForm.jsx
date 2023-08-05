@@ -3,11 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useGetUserQuery } from "./profileApiSlice";
 import { useUpdateUserMutation } from "./profileApiSlice";
 import { toast } from "react-toastify";
+import ErrorMessage from "../../components/ErrorMessage";
 
 const EditProfileForm = () => {
 	const { data: profile, isError, error } = useGetUserQuery();
 	const [updateUser, { isLoading }] = useUpdateUserMutation();
-	const navigate = useNavigate();
 
 	const [selectedImage, setSelectedImage] = useState("");
 	const [username, setusername] = useState("");
@@ -73,11 +73,7 @@ const EditProfileForm = () => {
 		}
 	};
 	if (isError) {
-		return (
-			<div className="flex justify-center items-center mt-16 text-2xl text-white">
-				<p>Oops, something went wrong: {error} </p>
-			</div>
-		);
+		<ErrorMessage error={error} />;
 	}
 
 	return (

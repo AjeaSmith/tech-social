@@ -6,10 +6,10 @@ const useAuth = () => {
 	const token = useSelector(selectCurrentToken);
 	if (token) {
 		const decoded = jwtDecode(token);
-		const { username } = decoded.UserInfo;
+		const { username, userId } = decoded.UserInfo;
 
-		return { username };
+		return { username, userId };
 	}
-	return { username: "" };
+	return { username: "", userId: "" };
 };
 export default useAuth;

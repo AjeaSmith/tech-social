@@ -2,12 +2,22 @@ import React from "react";
 import { useGetUserQuery } from "./profileApiSlice";
 import CharacterLimitText from "../../components/CharacterLimitText";
 import ClipLoader from "react-spinners/ClipLoader";
+import ErrorMessage from "../../components/ErrorMessage";
 
 const ProfileCard = () => {
-	const { data: profile, isLoading, isSuccess, error } = useGetUserQuery();
+	const {
+		data: profile,
+		isLoading,
+		isSuccess,
+		error,
+		isError,
+	} = useGetUserQuery();
 
 	let content;
 
+	if (isError) {
+		<ErrorMessage error={error} />;
+	}
 	if (isLoading) {
 		// Spinner
 		content = (

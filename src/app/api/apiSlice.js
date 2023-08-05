@@ -4,8 +4,6 @@ import {
 	setSessionExpiredError,
 } from "../../features/auth/authSlice";
 
-import "react-toastify/dist/ReactToastify.css";
-
 // sends token on every request
 const baseQuery = fetchBaseQuery({
 	baseUrl: "http://localhost:5100/api",
