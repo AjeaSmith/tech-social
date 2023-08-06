@@ -15,7 +15,10 @@ export const profileApiSlice = apiSlice.injectEndpoints({
 			query: (formData) => ({
 				url: "/users",
 				method: "PATCH",
-				body: formData,
+				headers: {
+					// No need to set the Content-Type here, the browser will do it automatically
+				},
+				body: formData, // Just pass the existing FormData object
 			}),
 		}),
 	}),

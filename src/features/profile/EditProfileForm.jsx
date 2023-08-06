@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useGetUserQuery } from "./profileApiSlice";
 import { useUpdateUserMutation } from "./profileApiSlice";
 import { toast } from "react-toastify";
@@ -9,7 +9,8 @@ const EditProfileForm = () => {
 	const { data: profile, isError, error } = useGetUserQuery();
 	const [updateUser, { isLoading }] = useUpdateUserMutation();
 
-	const [selectedImage, setSelectedImage] = useState("");
+	const formData = new FormData();
+
 	const [username, setusername] = useState("");
 	const [tagline, setTagline] = useState("");
 	const [password, setpassword] = useState("");
@@ -35,17 +36,21 @@ const EditProfileForm = () => {
 
 	const handleImageChange = (e) => {
 		const file = e.target.files[0];
-		setSelectedImage(file);
+
+		if (file) {
+			// Assuming you have a state variable named "formData" initialized with FormData()
+			formData.append("image", file);
+			// Other form field appends can be added here if needed
+		}
 	};
 
+	console.log(formData.get("password"));
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const formData = new FormData();
 		formData.append("username", username);
 		formData.append("tagline", tagline);
-		formData.append("password", password);
+		formData.append("password", password || "");
 		formData.append("link", link);
-		formData.append("image", selectedImage);
 		formData.append("bio", bio);
 		formData.append("fullName", fullName);
 		formData.append("email", email);
@@ -81,6 +86,7 @@ const EditProfileForm = () => {
 			<form
 				className="max-w-2xl mx-auto py-12 px-5 md:px-0 text-gray-200"
 				onSubmit={handleSubmit}
+				encType="multipart/form-data"
 			>
 				<div className="space-y-12">
 					<Link to="/app" className="underline flex">
