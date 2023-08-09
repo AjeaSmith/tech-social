@@ -9,6 +9,7 @@ import EditProfilePage from "./pages/EditProfilePage";
 import { ToastContainer } from "react-toastify";
 import NotFound from "./components/NotFound";
 import ViewProfilePage from "./pages/ViewProfilePage";
+import ProjectDetailPage from "./pages/ProjectDetailPage";
 
 function App() {
 	return (
@@ -20,6 +21,7 @@ function App() {
 					<Route index path="/app" element={<AppPage />} />
 					<Route path="/edit" element={<EditProfilePage />} />
 					<Route path="/view-profile" element={<ViewProfilePage />} />
+					<Route path="/projects/:id" element={<ProjectDetailPage />} />
 				</Route>
 				{/* Catch-all route for unmatched URLs */}
 				<Route path="/*" element={<NotFound />} />

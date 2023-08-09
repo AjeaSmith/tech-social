@@ -27,21 +27,38 @@ export const projectSlice = apiSlice.injectEndpoints({
 				} else return [{ type: "Post", id: "LIST" }];
 			},
 		}),
+		getProject: builder.query({
+			query: (id) => ({
+				url: `/projects/${id}`, // Correct URL construction
+				method: "GET",
+			}),
+			providesTags: (result, error, arg) => {
+				if (result?.id) {
+					return [{ type: "Project", id: result.id }]; // Use result.id for individual project
+				} else {
+					return [{ type: "Project", id: "LIST" }];
+				}
+			},
+		}),
 		addNewProject: builder.mutation({
-			query: (post) => ({
+			query: (project) => ({
 				url: "/projects",
 				method: "POST",
-				body: post,
+				body: project,
 			}),
 			invalidatesTags: [{ type: "Project", id: "LIST" }],
 		}),
 	}),
 });
 
-export const { useGetProjectsQuery, useAddNewProjectMutation } = projectSlice;
+export const {
+	useGetProjectsQuery,
+	useAddNewProjectMutation,
+	useGetProjectQuery,
+} = projectSlice;
 
 // returns the query result object
-export const selectProjectsResult = projectSlice.endpoints.getPosts.select();
+export const selectProjectsResult = projectSlice.endpoints.getProjects.select();
 
 // creates memoized selector
 const selectProjectsData = createSelector(

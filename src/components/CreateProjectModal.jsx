@@ -1,14 +1,55 @@
 import React, { useState } from "react";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { useAddNewProjectMutation } from "../features/projects/projectApiSlice";
+import { toast } from "react-toastify";
 
 const CreateProjectModal = ({ isOpen, setIsOpen }) => {
+	const formData = new FormData();
+	const [addNewProject, { isLoading }] = useAddNewProjectMutation();
+
+	const [errMsg, seterrMsg] = useState("");
 	const [title, setTitle] = useState("");
 	const [level, setLevel] = useState("");
 	const [description, setDescription] = useState("");
 	const [image, setImage] = useState("");
 	const [link, setLink] = useState("");
 
+	const handleImageChange = (e) => {
+		const file = e.target.files[0];
+
+		if (file) {
+			setImage(file);
+		}
+	};
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+
+		formData.append("title", title);
+		formData.append("level", level);
+		formData.append("description", description);
+		formData.append("image", image);
+		formData.append("link", link);
+
+		// submit to backend
+
+		await addNewProject(formData)
+			.unwrap()
+			.then((result) => {
+				toast.success(result.message, {
+					position: "top-right", // You can adjust the position of the toast
+					autoClose: 3000, // The toast will auto-close after 3 seconds
+					hideProgressBar: false,
+				});
+				setTimeout(() => {
+					window.location.href = "/app";
+				}, 5000);
+			})
+			.catch((err) => {
+				console.log(err);
+				seterrMsg(err.data.message);
+			});
+	};
 	return (
 		<div>
 			<Transition.Root show={isOpen} as={Fragment}>
@@ -38,14 +79,24 @@ const CreateProjectModal = ({ isOpen, setIsOpen }) => {
 							>
 								<Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
 									<div className="flex justify-start min-h-full flex-1 flex-col px-4 bg-[#19242D] lg:px-5 ">
-										{/* <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-											<h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
-												Sign in to your account
-											</h2>
-										</div> */}
-
 										<div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-											<form className="space-y-6">
+											<div
+												className={`${
+													errMsg ? "block" : "hidden"
+												} bg-red-100 border mb-5 border-red-400 text-red-700 px-4 py-3 rounded relative`}
+												role="alert"
+											>
+												<strong className="font-bold">
+													Oops!{" "}
+												</strong>
+												<span className="block sm:inline">
+													{errMsg}
+												</span>
+											</div>
+											<form
+												onSubmit={handleSubmit}
+												className="space-y-6"
+											>
 												<div>
 													<div className="flex items-center justify-between">
 														<label
@@ -158,6 +209,9 @@ const CreateProjectModal = ({ isOpen, setIsOpen }) => {
 																		file
 																	</span>
 																	<input
+																		onChange={
+																			handleImageChange
+																		}
 																		id="file-upload"
 																		name="file-upload"
 																		type="file"
@@ -183,8 +237,7 @@ const CreateProjectModal = ({ isOpen, setIsOpen }) => {
 															htmlFor="projectlink"
 															className="block text-sm font-medium leading-6 text-gray-400"
 														>
-															Link to project
-															(optional)
+															Live link (optional)
 														</label>
 													</div>
 													<div className="mt-2">
@@ -212,51 +265,14 @@ const CreateProjectModal = ({ isOpen, setIsOpen }) => {
 														Cancel
 													</button>
 													<button className="flex justify-center rounded-md bg-rose-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600">
-														Post
+														{isLoading
+															? "Posting..."
+															: "Post"}
 													</button>
 												</div>
 											</form>
 										</div>
 									</div>
-									{/* <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-										<div className="sm:flex sm:items-start">
-											<div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"></div>
-											<div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-												<Dialog.Title
-													as="h3"
-													className="text-base font-semibold leading-6 text-gray-900"
-												>
-													Deactivate account
-												</Dialog.Title>
-												<div className="mt-2">
-													<p className="text-sm text-gray-500">
-														Are you sure you want to
-														deactivate your account?
-														All of your data will be
-														permanently removed.
-														This action cannot be
-														undone.
-													</p>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-										<button
-											type="button"
-											className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-											onClick={() => false}
-										>
-											Deactivate
-										</button>
-										<button
-											type="button"
-											className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-											onClick={() => false}
-										>
-											Cancel
-										</button>
-									</div> */}
 								</Dialog.Panel>
 							</Transition.Child>
 						</div>

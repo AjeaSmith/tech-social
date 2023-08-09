@@ -1,33 +1,27 @@
 import React from "react";
 import { useGetProjectsQuery } from "./projectApiSlice";
 import Project from "./Project";
+import Spinner from "../../components/Spinner";
 
 const ProjectsList = () => {
-	const { data: projects, isLoading, isSuccess } = useGetProjectsQuery();
+	const { data: projects, isLoading } = useGetProjectsQuery();
 
-	let content;
-
-	if (isLoading) return <h1>Loading....</h1>;
+	if (isLoading) return <Spinner isLoading={isLoading} />;
 
 	if (!projects?.ids.length)
-		return (content = (
+		return (
 			<>
 				<p>No projects to show, be the first to create</p>
 			</>
-		));
+		);
 
-	if (isSuccess) {
-		return (content = (
-			<>
-				{projects.ids.map((postId) => {
-					return <Project key={postId} postId={postId} />;
-				})}
-			</>
-		));
-	}
-	return content;
+	return (
+		<>
+			{projects.ids.map((projectId) => {
+				return <Project key={projectId} projectId={projectId} />;
+			})}
+		</>
+	);
 };
 
 export default ProjectsList;
-
-// 64bec7d3c4cbe08e71b1c325

@@ -5,6 +5,8 @@ import ErrorMessage from "../../components/ErrorMessage";
 import useAuth from "../../hooks/useAuth";
 
 import DeleteAccountModal from "../../components/DeleteAccountModal";
+import Spinner from "../../components/Spinner";
+
 const ViewProfile = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const { userId } = useAuth();
@@ -12,17 +14,10 @@ const ViewProfile = () => {
 
 	if (isLoading) {
 		return (
-			<div className="flex justify-center items-center">
-				<ClipLoader
-					color="#ffffff"
-					loading={isLoading}
-					size={150}
-					aria-label="Loading Spinner"
-					data-testid="loader"
-				/>
-			</div>
+			<Spinner isLoading={isLoading}/>
 		);
 	}
+	console.log(profile);
 
 	if (isError) {
 		<ErrorMessage error={error} />;
@@ -135,6 +130,173 @@ const ViewProfile = () => {
 									</div>
 								</div>
 							</div>
+						</div>
+						<div className="project-container">
+							<a
+								class="relative bg-[#1A2730] block p-8 overflow-hidden border border-gray-500 rounded-lg"
+								href="#"
+							>
+								<span class="absolute inset-x-0 bottom-0 h-2  bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
+
+								<div class="justify-between sm:flex">
+									<div>
+										<h5 class="text-xl font-bold text-gray-100">
+											Building a SaaS product as a
+											software developer
+										</h5>
+										<p class="mt-1 text-xs font-medium text-gray-400">
+											By John Doe
+										</p>
+									</div>
+
+									<div class="flex-shrink-0 hidden ml-3 sm:block">
+										<img
+											class="object-cover w-16 h-16 rounded-lg shadow-sm"
+											src="https://www.hyperui.dev/photos/man-5.jpeg"
+											alt=""
+										/>
+									</div>
+								</div>
+
+								<div class="mt-4 sm:pr-8">
+									<p class="text-sm text-gray-200">
+										Lorem ipsum dolor sit amet consectetur
+										adipisicing elit. In nesciunt,
+										laboriosam eos at illum nihil
+										accusantium necessitatibus eius
+									</p>
+								</div>
+
+								<dl class="flex mt-6">
+									<div class="flex flex-col-reverse">
+										<dt class="text-sm font-medium text-gray-400">
+											Published
+										</dt>
+										<dd class="text-xs text-gray-300">
+											31st June, 2021
+										</dd>
+									</div>
+
+									<div class="flex flex-col-reverse ml-3 sm:ml-6">
+										<dt class="text-sm font-medium text-gray-400">
+											Project level
+										</dt>
+										<dd class="text-xs text-gray-300">
+											Beginner
+										</dd>
+									</div>
+								</dl>
+							</a>
+							<a
+								class="relative bg-[#1A2730] block p-8 overflow-hidden border border-gray-100 rounded-lg"
+								href="#"
+							>
+								<span class="absolute inset-x-0 bottom-0 h-2  bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
+
+								<div class="justify-between sm:flex">
+									<div>
+										<h5 class="text-xl font-bold text-gray-100">
+											Building a SaaS product as a
+											software developer
+										</h5>
+										<p class="mt-1 text-xs font-medium text-gray-400">
+											By John Doe
+										</p>
+									</div>
+
+									<div class="flex-shrink-0 hidden ml-3 sm:block">
+										<img
+											class="object-cover w-16 h-16 rounded-lg shadow-sm"
+											src="https://www.hyperui.dev/photos/man-5.jpeg"
+											alt=""
+										/>
+									</div>
+								</div>
+
+								<div class="mt-4 sm:pr-8">
+									<p class="text-sm text-gray-200">
+										Lorem ipsum dolor sit, amet consectetur
+										adipisicing elit. At velit illum
+										provident a, ipsa maiores deleniti
+										consectetur nobis et eaque.
+									</p>
+								</div>
+
+								<dl class="flex mt-6">
+									<div class="flex flex-col-reverse">
+										<dt class="text-sm font-medium text-gray-400">
+											Published
+										</dt>
+										<dd class="text-xs text-gray-300">
+											31st June, 2021
+										</dd>
+									</div>
+
+									<div class="flex flex-col-reverse ml-3 sm:ml-6">
+										<dt class="text-sm font-medium text-gray-400">
+											Reading time
+										</dt>
+										<dd class="text-xs text-gray-300">
+											3 minute
+										</dd>
+									</div>
+								</dl>
+							</a>
+							<a
+								class="relative bg-[#1A2730] block p-8 overflow-hidden border border-gray-500 rounded-lg"
+								href="#"
+							>
+								<span class="absolute inset-x-0 bottom-0 h-2  bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
+
+								<div class="justify-between sm:flex">
+									<div>
+										<h5 class="text-xl font-bold text-gray-100">
+											Building a SaaS product as a
+											software developer
+										</h5>
+										<p class="mt-1 text-xs font-medium text-gray-400">
+											By John Doe
+										</p>
+									</div>
+
+									<div class="flex-shrink-0 hidden ml-3 sm:block">
+										<img
+											class="object-cover w-16 h-16 rounded-lg shadow-sm"
+											src="https://www.hyperui.dev/photos/man-5.jpeg"
+											alt=""
+										/>
+									</div>
+								</div>
+
+								<div class="mt-4 sm:pr-8">
+									<p class="text-sm text-gray-200">
+										Lorem ipsum dolor sit, amet consectetur
+										adipisicing elit. At velit illum
+										provident a, ipsa maiores deleniti
+										consectetur nobis et eaque.
+									</p>
+								</div>
+
+								<dl class="flex mt-6">
+									<div class="flex flex-col-reverse">
+										<dt class="text-sm font-medium text-gray-400">
+											Published
+										</dt>
+										<dd class="text-xs text-gray-300">
+											31st June, 2021
+										</dd>
+									</div>
+
+									<div class="flex flex-col-reverse ml-3 sm:ml-6">
+										<dt class="text-sm font-medium text-gray-400">
+											Reading time
+										</dt>
+										<dd class="text-xs text-gray-300">
+											3 minute
+										</dd>
+									</div>
+								</dl>
+							</a>
 						</div>
 					</div>
 					<footer className="relative bg-[#06151D] pt-8 pb-6 mt-8">

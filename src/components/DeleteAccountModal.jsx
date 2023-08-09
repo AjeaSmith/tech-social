@@ -4,14 +4,17 @@ import { useDeleteUserMutation } from "../features/auth/authApiSlice";
 import { toast } from "react-toastify";
 import { logOut } from "../features/auth/authSlice";
 import { useDispatch } from "react-redux";
+import useAuth from "../hooks/useAuth";
 
 const DeleteAccountModal = ({ isOpen, setIsOpen }) => {
+	const { userId } = useAuth();
+
 	const dispatch = useDispatch();
 	const [deleteUser, { isLoading: isDeleteLoading }] =
 		useDeleteUserMutation();
 
 	const handleDeleteAccount = async () => {
-		await deleteUser()
+		await deleteUser(userId)
 			.unwrap()
 			.then((result) => {
 				dispatch(logOut());

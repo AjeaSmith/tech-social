@@ -1,10 +1,12 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logOut } from "../features/auth/authSlice";
+import CreateProjectModal from "./CreateProjectModal";
 
 const Header = () => {
+	const [isOpen, setIsOpen] = useState(false);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
@@ -15,19 +17,40 @@ const Header = () => {
 		navigate("/login");
 	};
 	return (
-		<header className="w-full mt-5  text-gray-700 bg-transparent  body-font">
+		<header className="w-full mt-5 text-gray-700 bg-transparent body-font">
+			<CreateProjectModal isOpen={isOpen} setIsOpen={setIsOpen} />
 			<div className="container flex flex-col justify-between items-center p-6 mx-auto md:flex-row">
 				<h1 className="text-white uppercase">
 					<Link to="/app">Tech</Link>
 				</h1>
 				<div className="flex items-center h-full pl-6 ml-6 border-gray-200">
+					<button
+						onClick={() => setIsOpen(!isOpen)}
+						className="border-red-500 bg-red-600 mr-16 px-1 py-1 rounded-md"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="white"
+							viewBox="0 0 24 24"
+							strokeWidth={1.5}
+							stroke="white"
+							className="w-6 h-6 cursor-pointer"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								d="M12 4.5v15m7.5-7.5h-15"
+							/>
+						</svg>
+					</button>
+
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="white"
 						viewBox="0 0 24 24"
 						strokeWidth={1.5}
 						stroke="currentColor"
-						className="w-7 h-7 mr-3"
+						className="w-6 h-6 mx-3"
 					>
 						<path
 							strokeLinecap="round"
@@ -37,7 +60,7 @@ const Header = () => {
 					</svg>
 					<Menu as="div" className="relative inline-block text-left">
 						<div>
-							<Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-red-00">
+							<Menu.Button className="cursor-pointer inline-flex w-full justify-center gap-x-1.5 rounded-md py-2 text-sm font-semibold text-gray-900 hover:bg-red-00">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									viewBox="0 0 24 24"

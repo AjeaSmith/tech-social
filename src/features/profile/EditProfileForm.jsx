@@ -13,6 +13,7 @@ const EditProfileForm = () => {
 
 	const [username, setusername] = useState("");
 	const [tagline, setTagline] = useState("");
+	const [image, setimage] = useState("");
 	const [password, setpassword] = useState("");
 	const [link, setlink] = useState("");
 	const [bio, setbio] = useState("");
@@ -25,7 +26,7 @@ const EditProfileForm = () => {
 		if (profile) {
 			setusername(profile.username);
 			setTagline(profile.tagline);
-			setpassword(profile.password);
+			setpassword(profile.password !== undefined ? profile.password : "");
 			setlink(profile.link);
 			setbio(profile.bio);
 			setfullName(profile.fullname);
@@ -38,44 +39,42 @@ const EditProfileForm = () => {
 		const file = e.target.files[0];
 
 		if (file) {
-			// Assuming you have a state variable named "formData" initialized with FormData()
-			formData.append("image", file);
-			// Other form field appends can be added here if needed
+			setimage(file);
 		}
 	};
 
-	console.log(formData.get("password"));
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
 		formData.append("username", username);
 		formData.append("tagline", tagline);
-		formData.append("password", password || "");
+		formData.append("password", password);
+		formData.append("image", image);
 		formData.append("link", link);
 		formData.append("bio", bio);
 		formData.append("fullName", fullName);
 		formData.append("email", email);
 		formData.append("location", location);
 
-		try {
-			await updateUser(formData)
-				.unwrap()
-				.then((result) => {
-					toast.success(result.message, {
-						position: "top-right", // You can adjust the position of the toast
-						autoClose: 3000, // The toast will auto-close after 3 seconds
-						hideProgressBar: true,
-					});
-					setTimeout(() => {
-						window.location.href = "/app";
-					}, 3000);
+		await updateUser(formData)
+			.unwrap()
+			.then((result) => {
+				toast.success(result.message, {
+					position: "top-right", // You can adjust the position of the toast
+					autoClose: 3000, // The toast will auto-close after 3 seconds
+					hideProgressBar: false
 				});
-		} catch (error) {
-			toast.error(error.message, {
-				position: "top-right", // You can adjust the position of the toast
-				autoClose: 3000, // The toast will auto-close after 3 seconds
-				hideProgressBar: true,
+				setTimeout(() => {
+					window.location.href = "/app";
+				}, 3000);
+			})
+			.catch((err) => {
+				toast.error(err.message, {
+					position: "top-right", // You can adjust the position of the toast
+					autoClose: 3000, // The toast will auto-close after 3 seconds
+					hideProgressBar: false
+				});
 			});
-		}
 	};
 	if (isError) {
 		<ErrorMessage error={error} />;
@@ -119,7 +118,6 @@ const EditProfileForm = () => {
 								<div className="mt-2">
 									<div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-400 focus-within:ring-2 focus-within:ring-inset focus-within:ring-red-600 sm:max-w-md">
 										<input
-											value={username}
 											onChange={(e) =>
 												setusername(e.target.value)
 											}
@@ -128,6 +126,7 @@ const EditProfileForm = () => {
 											id="username"
 											autoComplete="username"
 											className="px-4 block flex-1 border-0 bg-transparent text-gray-200 placeholder:text-gray-500 focus:ring-0 sm:text-sm sm:leading-6"
+											value={username}
 										/>
 									</div>
 								</div>
@@ -190,6 +189,7 @@ const EditProfileForm = () => {
 										value={link}
 										type="text"
 										name="link"
+										id="link"
 										onChange={(e) =>
 											setlink(e.target.value)
 										}

@@ -1,9 +1,4 @@
-import { createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../../app/api/apiSlice";
-
-const profileAdapter = createEntityAdapter();
-
-const initialState = profileAdapter.getInitialState();
 
 export const profileApiSlice = apiSlice.injectEndpoints({
 	tagTypes: ["User"],
@@ -15,9 +10,7 @@ export const profileApiSlice = apiSlice.injectEndpoints({
 			query: (formData) => ({
 				url: "/users",
 				method: "PATCH",
-				headers: {
-					// No need to set the Content-Type here, the browser will do it automatically
-				},
+				headers: {},
 				body: formData, // Just pass the existing FormData object
 			}),
 		}),

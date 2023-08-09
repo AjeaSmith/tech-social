@@ -6,6 +6,28 @@
 .app_wrapper--projects {
 	padding-left: 1rem;
 }
+.app_wrapper--projects {
+	padding-right: 1rem;
+}
+.project-container {
+	row-gap: 15px;
+	display: grid;
+	grid-template-columns: 1fr;
+}
+@media (min-width: 767px) {
+	.project-container {
+		column-gap: 15px;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
+}
+@media (min-width: 1296px) {
+	.project-container {
+		column-gap: 15px;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+}
 
 @media (max-width: 990px) {
 	.app_wrapper {
