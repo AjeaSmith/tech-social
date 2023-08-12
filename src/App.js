@@ -20,7 +20,7 @@ function App() {
 				<Route element={<ProtectedRoute />}>
 					<Route index path="/app" element={<AppPage />} />
 					<Route path="/edit" element={<EditProfilePage />} />
-					<Route path="/view-profile" element={<ViewProfilePage />} />
+					<Route path="/view-profile/:id" element={<ViewProfilePage />} />
 					<Route path="/projects/:id" element={<ProjectDetailPage />} />
 				</Route>
 				{/* Catch-all route for unmatched URLs */}

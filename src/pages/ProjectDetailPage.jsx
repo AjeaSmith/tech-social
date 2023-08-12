@@ -1,13 +1,16 @@
 import React from "react";
 import { useGetProjectQuery } from "../features/projects/projectApiSlice";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import ErrorMessage from "../components/ErrorMessage";
 import Header from "../components/Header";
+import useAuth from "../hooks/useAuth";
+import { formattedDate } from "../components/FormattedDate";
 const ProjectDetailPage = () => {
+	const { userId } = useAuth();
 	const { id } = useParams();
 	const { data: project, isLoading, error, isError } = useGetProjectQuery(id);
-	console.log(project);
+
 	if (isLoading) {
 		return <Spinner isLoading={isLoading} />;
 	}
@@ -31,12 +34,15 @@ const ProjectDetailPage = () => {
 							</div>
 							<div className="flex flex-col">
 								<div>
-									<p className="inline-block text-lg font-bold dark:text-white">
+									<Link
+										to={`/view-profile/${userId}`}
+										className="inline-block text-lg font-bold dark:text-white"
+									>
 										{project.user.username}
-									</p>
+									</Link>
 								</div>
 								<div className="text-slate-500 dark:text-slate-400">
-									July 17, 2018
+									{formattedDate(project.createdAt)}
 								</div>
 							</div>
 						</div>
@@ -111,6 +117,7 @@ const ProjectDetailPage = () => {
 							{/* <!-- Comment row --> */}
 							<div className="media flex pb-4 mb-2">
 								<img
+									alt="something"
 									className="rounded-full max-w-none w-12 h-12 mr-4"
 									src="https://randomuser.me/api/portraits/men/82.jpg"
 								/>
@@ -133,6 +140,7 @@ const ProjectDetailPage = () => {
           <!-- comments row --> */}
 							<div className="media flex pb-4">
 								<img
+									alt="something"
 									className="rounded-full max-w-none w-12 h-12 mr-4"
 									src="https://randomuser.me/api/portraits/women/76.jpg"
 								/>
@@ -154,14 +162,14 @@ const ProjectDetailPage = () => {
 							</div>
 							{/* <!-- End comments row -->
           <!-- More comments --> */}
-							<div className="w-full">
+							{/* <div className="w-full">
 								<a
 									href="#"
 									className="py-3 px-4 w-full block bg-slate-100 dark:bg-slate-700 text-center rounded-lg font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition ease-in-out delay-75"
 								>
 									Show more comments
 								</a>
-							</div>
+							</div> */}
 							{/* <!-- End More comments --> */}
 						</div>
 					) : (

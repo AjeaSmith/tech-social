@@ -4,8 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logOut } from "../features/auth/authSlice";
 import CreateProjectModal from "./CreateProjectModal";
+import useAuth from "../hooks/useAuth";
 
 const Header = () => {
+	const { userId } = useAuth();
 	const [isOpen, setIsOpen] = useState(false);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -90,7 +92,7 @@ const Header = () => {
 									<Menu.Item>
 										{({ active }) => (
 											<Link
-												to="/view-profile"
+												to={`/view-profile/${userId}`}
 												className={`block w-full px-4 py-2 text-left text-sm hover:bg-red-500 hover:text-gray-200 ${
 													active
 														? "bg-gray-100 text-gray-900"

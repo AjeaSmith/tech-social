@@ -2,6 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { selectProjectById } from "./projectApiSlice";
 import { Link } from "react-router-dom";
+import CharacterLimitText from "../../components/CharacterLimitText";
+import { formattedDate } from "../../components/FormattedDate";
 
 const Project = ({ projectId }) => {
 	const project = useSelector((state) => selectProjectById(state, projectId));
@@ -23,31 +25,32 @@ const Project = ({ projectId }) => {
 						<div className="flex flex-col">
 							<div>
 								<p className="inline-block text-lg font-bold dark:text-white">
-									Wade Warren
+									{project.user.username}
 								</p>
 							</div>
 							<div className="text-slate-500 dark:text-slate-400">
-								July 17, 2018
+								{formattedDate(project.createdAt)}
 							</div>
 						</div>
 					</div>
 				</div>
 				<h2 className="text-3xl font-extrabold dark:text-white">
-					Web Design templates Selection
+					{project.title}
 				</h2>
 				<div className="py-4">
 					<div className="flex justify-between gap-1 mb-1">
 						<img
 							alt={project.image}
-							className="max-w-full"
-							src="https://picsum.photos/400"
+							className="max-w-full w-1/3"
+							src={project.image}
 						/>
 					</div>
 				</div>
 				<p className="dark:text-slate-200">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-					do eiusmod tempor incididunt ut labore et dolore magna
-					aliqua.
+					<CharacterLimitText
+						text={project.description}
+						maxCharacterCount={200}
+					/>
 				</p>
 				<div className="pt-4">
 					<div className="inline-flex items-center mr-5" href="#">
