@@ -5,7 +5,7 @@ import Spinner from "../components/Spinner";
 import ErrorMessage from "../components/ErrorMessage";
 import Header from "../components/Header";
 import useAuth from "../hooks/useAuth";
-import { formattedDate } from "../components/FormattedDate";
+import { formattedDate } from "../utils/FormattedDate";
 import CommentForm from "../features/comments/commentForm";
 import Comments from "../features/comments/Comments";
 import { useGetCommentsQuery } from "../features/comments/commentApiSlice";

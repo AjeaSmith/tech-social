@@ -6,8 +6,8 @@ import useAuth from "../../hooks/useAuth";
 import DeleteAccountModal from "../../components/DeleteAccountModal";
 import Spinner from "../../components/Spinner";
 import { Link } from "react-router-dom";
-import CharacterLimitText from "../../components/CharacterLimitText";
-import { formattedDate } from "../../components/FormattedDate";
+import CharacterLimitText from "../../utils/CharacterLimitText";
+import { formattedDate } from "../../utils/FormattedDate";
 
 const ViewProfile = () => {
 	const [isOpen, setIsOpen] = useState(false);

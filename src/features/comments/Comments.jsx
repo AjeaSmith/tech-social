@@ -9,7 +9,7 @@ const Comments = () => {
 	if (isLoading) {
 		return <Spinner isLoading={isLoading} />;
 	}
-
+	console.log(comments);
 	// Sort comments by creation date (assuming "createdAt" is a property)
 	const sortedComments = [...comments].sort(
 		(a, b) => new Date(b.createdAt) - new Date(a.createdAt)

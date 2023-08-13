@@ -2,8 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { selectProjectById } from "./projectApiSlice";
 import { Link } from "react-router-dom";
-import CharacterLimitText from "../../components/CharacterLimitText";
-import { formattedDate } from "../../components/FormattedDate";
+import CharacterLimitText from "../../utils/CharacterLimitText";
+import { formattedDate } from "../../utils/FormattedDate";
 
 const Project = ({ projectId }) => {
 	const project = useSelector((state) => selectProjectById(state, projectId));

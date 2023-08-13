@@ -1,5 +1,5 @@
 import { useGetUserQuery } from "./profileApiSlice";
-import CharacterLimitText from "../../components/CharacterLimitText";
+import CharacterLimitText from "../../utils/CharacterLimitText";
 import ErrorMessage from "../../components/ErrorMessage";
 import Spinner from "../../components/Spinner";
 

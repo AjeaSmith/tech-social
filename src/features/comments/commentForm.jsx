@@ -18,7 +18,6 @@ const CommentForm = ({ projectId }) => {
 					autoClose: 3000,
 					hideProgressBar: false,
 				});
-				console.log(result);
 			})
 			.catch((err) => {
 				toast.error(err.message, {
