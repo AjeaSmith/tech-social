@@ -7,6 +7,11 @@ import {
 // sends token on every request
 const baseQuery = fetchBaseQuery({
 	baseUrl: "http://localhost:5100/api",
+	transformResponse: (response) => {
+		return response.map((comment) => {
+			return { ...comment, id: comment._id };
+		});
+	},
 	credentials: "include",
 	prepareHeaders: (headers, { getState }) => {
 		const token = getState().auth.token;
